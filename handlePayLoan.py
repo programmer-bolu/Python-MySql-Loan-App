@@ -5,14 +5,13 @@ userIndex = db.allUsersData[login.userIndex]
 index = 0
 amt = input('How much will you like to pay >>>. ')
 def confirm():
+    global amt
     if userIndex[4] in db.LoanedUserNumber:
         for i in db.LoanedUserNumber:
             global index
             if i == userIndex[4]:
                 break
             index += 1    
-
-    global amt
     try:
         amt = int(amt)
         payment()
@@ -22,13 +21,13 @@ def confirm():
         ff.userFunction()
 
 def payment():
-    print(userIndex)
+    # print(userIndex)
     con = input('Enter your Pin >>> ')
     if con == userIndex[5]:
         if int(db.loanedUser[index][2]) - int(amt) == 0:
             action = f'DELETE FROM loneduser WHERE phoneNumber = "{db.loanedUser[index][1]}"'
-            updateuserbalance = f'UPDATE allusers SET balance = {int(userIndex[6]) - int(amt)} WHERE phoneNumber = "{userIndex[4]}"'
-            updateadminbalance = f'UPDATE allusers SET balance = {int(db.allUsersData[0][6]) + int(amt)} WHERE phoneNumber = "09019525536"'
+            updateuserbalance = f'UPDATE allusers SET balance = "{int(userIndex[6]) - int(amt)}" WHERE phoneNumber = "{userIndex[4]}"'
+            updateadminbalance = f'UPDATE allusers SET balance = "{int(db.allUsersData[0][6]) + int(amt)}" WHERE phoneNumber = "09019525536"'
             db.connector.execute(action)
             db.connector.execute(updateadminbalance)
             db.connector.execute(updateuserbalance)
@@ -37,8 +36,8 @@ def payment():
             hf.userFunction()
         elif int(db.loanedUser[index][2]) - int(amt) < 0:
             action = f'DELETE FROM loneduser WHERE phoneNumber = "{db.loanedUser[index][1]}"'
-            updateuserbalance = f'UPDATE allusers SET balance = {int(userIndex[6]) - int(db.loanedUser[index][2])} WHERE phoneNumber = "{userIndex[4]}"'
-            updateadminbalance = f'UPDATE allusers SET balance = {int(db.allUsersData[0][6]) + int(db.loanedUser[index][2])} WHERE phoneNumber = "09019525536"'
+            updateuserbalance = f'UPDATE allusers SET balance = "{int(userIndex[6]) - int(db.loanedUser[index][2])}" WHERE phoneNumber = "{userIndex[4]}"'
+            updateadminbalance = f'UPDATE allusers SET balance = "{int(db.allUsersData[0][6]) + int(db.loanedUser[index][2])}" WHERE phoneNumber = "09019525536"'
             db.connector.execute(action)
             db.connector.execute(updateadminbalance)
             db.connector.execute(updateuserbalance)
@@ -46,9 +45,9 @@ def payment():
             db.data.commit()
             hf.userFunction()
         else:
-            action = f'UPDATE loneduser SET loanedAmt="{int(db.loanedUser[index][2]) - int(amt)}" WHERE phoneNumber="{userIndex[4]}"'
-            updateuserbalance = f'UPDATE allusers SET balance={int(userIndex[6]) - int(amt)} WHERE phoneNumber="{userIndex[4]}"'
-            updateadminbalance = f'UPDATE allusers SET balance={int(db.allUsersData[0][6]) + int(amt)} WHERE phoneNumber="09019525536"'
+            action = f'UPDATE loneduser SET loanedAmt="{int(db.loanedUser[index][2]) - amt}" WHERE phoneNumber="{userIndex[4]}"'
+            updateuserbalance = f'UPDATE allusers SET balance="{int(userIndex[6]) - amt}" WHERE phoneNumber="{userIndex[4]}"'
+            updateadminbalance = f'UPDATE allusers SET balance="{int(db.allUsersData[0][6]) + amt}" WHERE phoneNumber="09019525536"'
             db.connector.execute(action)
             db.connector.execute(updateadminbalance)
             db.connector.execute(updateuserbalance)
@@ -66,5 +65,3 @@ def main():
     else:
         print(f'You did not have up to {amt} in your account')
         hf.userFunction()
-
-main()

@@ -1,10 +1,12 @@
 import handleDataBase as db
+db.fetch()
 import handleLogin as login
 import handleLoanTaking as tl
 import handleInvestment
 import handletransfer as ht
 db.fetch()
 def userFunction():
+    db.fetch()
     global login
     userIndex = login.userIndex
     db.fetch()
@@ -33,8 +35,7 @@ def userFunction():
             print(f'\nUnable to process loan, kindly pay your existing loan of #{db.loanedUser[index][2]}')
             userFunction()
     elif userFunc == '3':
-        import handleDataBase as database
-        database.fetch()
+        db.fetch()
         global save
         if db.allUsersData[userIndex][4] in db.LoanedUserNumber:
             print(f'\nYour balance is {db.allUsersData[userIndex][6]}\nYou have a loan balance of {db.loanedUser[index][2]}')
@@ -55,6 +56,7 @@ def userFunction():
     elif userFunc == '4':
         if db.allUsersData[userIndex][4] in db.LoanedUserNumber:
             import handlePayLoan
+            handlePayLoan.main()
         else:
             print('You do not have any pending loan to pay')
             userFunction()

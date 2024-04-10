@@ -5,6 +5,7 @@ import time as tm
 import handleSignedInUserFunction as hsif
 SaveToLoanedUser = 'INSERT INTO loneduser (phoneNumber, loanedAmt, loanedDate, dateToPayLoan) VALUES(%s, %s, %s, %s)'
 def tl():
+    print('You will pay a interest of 20% of the money you loaned')
     userIndex = db.allUsersData[login.userIndex]
     currentDay = dt.datetime.now()
     loanAmount = input('\nHow much loan will you like to take Maximum("#1,000,000")>>>. ')
@@ -29,6 +30,7 @@ def tl():
                     db.fetch()
                     tm.sleep(1)
                     print(f'\nLoaned Successful Taken for {(userIndex[1]).title()} {(userIndex[2]).title()}. Check your Balance...\nFor any Enquiry contact +2349019525536\n')
+                    db.fetch()
                     hsif.userFunction()
                 else:
                     print(f'The loan Range Is ({currentDay.strftime("%m")}/{currentDay.strftime("%Y")} to {int(currentDay.strftime("%m")) + 3}/{currentDay.strftime("%Y")})')
