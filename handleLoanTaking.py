@@ -5,7 +5,7 @@ import time as tm
 import handleSignedInUserFunction as hsif
 SaveToLoanedUser = 'INSERT INTO loneduser (phoneNumber, loanedAmt, loanedDate, dateToPayLoan) VALUES(%s, %s, %s, %s)'
 def tl():
-    print('You will pay a interest of 20% of the money you loaned')
+    print('You will pay an interest of 20% of the money you loaned')
     userIndex = db.allUsersData[login.userIndex]
     currentDay = dt.datetime.now()
     loanAmount = input('\nHow much loan will you like to take Maximum("#1,000,000")>>>. ')
@@ -13,7 +13,7 @@ def tl():
     try:
         loanAmount = int(loanAmount)
         if loanAmount <= 1000000 and int(db.allUsersData[0][6]) - loanAmount >= 0:
-            loanedUserValue.append(str(loanAmount + (0.2 * loanAmount)))
+            loanedUserValue.append(str(loanAmount + int((0.2 * loanAmount))))
             time = f'\nWhen will you like to pay the loan ||| RANGE( {currentDay.strftime("%m")}/{currentDay.strftime("%Y")} to {int(currentDay.strftime("%m")) + 3}/{currentDay.strftime("%Y")}) |||'
             print(time)
             time = input('Enter in this format 01/2001 >>>>  ')
